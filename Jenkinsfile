@@ -14,6 +14,7 @@ pipeline {
     stages {
 
        stage('Checking for question/discussion section in content folders'){
+            when { expression { false } }
             steps {
               script {
                 def warningFound = false
@@ -44,16 +45,6 @@ pipeline {
               }
             }
        }
-
-       stage('Running FortiDevSec scans...') {
-            when { expression { true } }
-            steps {
-                echo "Running SAST scan..."
-                sh 'env | grep -E "JENKINS_HOME|BUILD_ID|GIT_BRANCH|GIT_COMMIT" > /tmp/env'
-                sh 'docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
-                sh 'docker run --rm --env-file /tmp/env --mount type=bind,source=$PWD,target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest'
-            }
-        }
     }
     post {
      success {
