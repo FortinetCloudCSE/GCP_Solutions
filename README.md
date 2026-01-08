@@ -1,7 +1,3 @@
-# Fortinet Template Repo for TECWorkshops
+# GCP_Solutions
 
-## Prereqs
-  - Docker
- 
-## How to use this repo:
-https://fortinetcloudcse.github.io/UserRepo/index.html
+To view the workshop, please go here: [GitHub Pages Link](https://fortinetcloudcse.github.io/GCP_Solutions/01active_active/)
