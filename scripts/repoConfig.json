@@ -1,37 +1,19 @@
 {
-  "repoName":"UserRepo",
-  "author":"Jeff Kopko",
-  "workshopTitle":"Hugo for Fortinet TECWorkshops",
-  "themeVariant":"Workshop",
-  "logoBannerText":"FortiHugo",
+  "repoName":"GCP Solutions",
+  "author":"Derrick Gooch",
+  "workshopTitle":"GCP Solutions",
+  "themeVariant":"UseCase",
+  "logoBannerText":"",
   "logoBannerSubText":"",
   "errorLevel":"warning",
   "googleServicesID":"G-5RZBH288ST",
   "marketingCode": "FortiHugo202",
   "shortcuts": [
   {
-    "text": "Fortinet Cloud CSE GitHub Org",
-    "URL": "https://github.com/FortinetCloudCSE",
+    "text": "FortiGate Public Cloud Docs for GCP",
+    "URL": "https://docs.fortinet.com/document/fortigate-public-cloud/7.6.0/gcp-administration-guide/736375/about-fortigate-vm-for-gcp",
     "icon": "fa-graduation-cap",
     "weight":10
-  },
-  {
-    "text": "Fortinet Standard Workshop Guide",
-    "URL": "https://fortinetcloudcse.github.io/UserRepo",
-    "icon": "fa-tools",
-    "weight":20
-  },
-  {
-    "text": "Fortinet Standard Workshop Template Repo",
-    "URL": "https://github.com/FortinetCloudCSE/UserRepo",
-    "icon": "fa-tools",
-    "weight":30
-  },
-  {
-    "text": "Fortinet Hugo reLearn theme - Guide",
-    "URL": "https://mcshelby.github.io/hugo-theme-relearn/index.html",
-    "icon": "fa-tools",
-    "weight":40
   }
   ]
 }
