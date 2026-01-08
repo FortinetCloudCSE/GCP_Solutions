@@ -78,7 +78,7 @@ The Active-Active FortiGate solution deploys the following Google Cloud Platform
 
 ## Deploy Sample Terraform
 
-Below are the
+The Terraform templates to deploy this environment are located in the github repository linked to this page.
 
 ### How do you run these?
 
