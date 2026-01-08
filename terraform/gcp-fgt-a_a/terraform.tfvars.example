@@ -1,0 +1,26 @@
+project = "project_name"
+region  = "region_name"
+zone    = "az1 name"
+zone2 = "az2 name"
+
+# Prefixed to all resources
+prefix = "resource_prefix"
+
+# FortiGate image and instance type
+# 7.4.7 PAYG is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-747-20250123-001-w-license
+# 7.4.7 BYOL is projects/fortigcp-project-001/global/images/fortinet-fgt-747-20250123-001-w-license
+fortigate_vm_image     = "projects/fortigcp-project-001/global/images/fortinet-fgt-747-20250123-001-w-license"
+fortigate_machine_type = "n2-standard-2"
+
+fortigate_license_files = {
+  fgt1_instance    = { name = null }
+  fgt2_instance = { name = null }
+}
+
+license_type = "flex" # can be byol, flex, or payg, make sure the license is correct for the sku
+
+flex_tokens = ["token1", "token2"]
+
+admin_port = 8443
+fgt_password = "fortinet"
+

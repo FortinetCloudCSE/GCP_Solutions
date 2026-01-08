@@ -84,7 +84,7 @@ Below are the
 
 1. Log into GCP console and open a cloud shell.
 1. use ``` git clone https://github.com/FortinetCloudCSE/GCP_Solutions.git ``` to clone this repo.
-1. move to the Terraform directory by typing ``` cd GCP_Solutions/Terraform ```
+1. move to the Terraform directory by typing ``` cd GCP_Solutions/terraform/gcp-fgt-a_a ```
 1. Open `terraform.tfvars.example`Change the name to 'terraform.tfvars' update the required variables (project, region, zone zone2, prefix, fortigate_vm_image, fortigate_machine_type)
 1. Run `terraform get`.
 1. Run `terraform init`.
