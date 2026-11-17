@@ -1,6 +1,6 @@
 ---
-title: "CH 1 FortiGate Network Security Integration"
-linkTitle: "CH 2: FortiGate NSI"
+title: "Ch 1 FortiGate Network Security Integration"
+linkTitle: "Ch 2: FortiGate NSI"
 weight: 9
 ---
 
