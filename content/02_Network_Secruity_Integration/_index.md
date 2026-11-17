@@ -12,12 +12,16 @@ This solution uses Google Cloud Network Security Integration (NSI) to steer traf
 
 The [Terraform configuration and full README](https://github.com/FortinetCloudCSE/GCP_Solutions/tree/main/terraform/gcp-nsi-umig) are in `terraform/gcp-nsi-umig`.
 
+Google calls this an [in-band integration](https://docs.cloud.google.com/network-security-integration/docs/in-band/in-band-integration-overview): matching packets enter the inspection path before reaching their destination, without changing the workload VPC's routes. The FortiGate infrastructure is the **service producer**; each workload VPC associated with it is a **service consumer**.
+
 ## How Traffic Reaches the FortiGates
 
-1. A global network firewall policy on each associated workload VPC applies an NSI security profile group to ingress and egress traffic.
-2. The security profile group references an intercept endpoint group and deployment group.
-3. A deployment in each configured zone points to a forwarding rule for an internal UDP load balancer on port 6081. Intercepted traffic reaches the FortiGates using Geneve encapsulation.
-4. The load balancer sends traffic to healthy FortiGate backends. Its regional backend service uses client IP session affinity and a health check on port 8080.
+1. A global network firewall policy on each associated workload VPC uses the `apply_security_profile_group` action to select ingress and egress traffic for inspection.
+2. The security profile group contains a custom intercept security profile. That profile references an intercept endpoint group, which points to the producer's intercept deployment group. Each workload VPC also needs an association with that endpoint group.
+3. A deployment in each configured zone points to a forwarding rule for an internal UDP load balancer on port 6081. Google Cloud intercepts matching egress packets before routing and matching ingress packets after routing, then sends them to the producer using GENEVE encapsulation. The original packet's source and destination addresses are preserved inside the encapsulated packet.
+4. The load balancer sends traffic to healthy FortiGate backends. Its regional backend service uses client IP session affinity and a health check on port 8080. When the FortiGate permits a packet, it re-encapsulates and returns it to the consumer using direct server return.
+
+Interception requires the firewall policy and endpoint group to be associated with the consumer VPC. The security profile used by the rule must reference that associated endpoint group. A firewall rule alone does not steer packets if these resources are mismatched. Intercept rules track sessions; intercepted TCP connections must start with a SYN packet. Unknown non-SYN packets are dropped. See Google's [in-band integration overview](https://docs.cloud.google.com/network-security-integration/docs/in-band/in-band-integration-overview) for the full packet flow and requirements.
 
 Each configured zone has one FortiGate VM in an **unmanaged instance group**. The default `zones` list has three zones. The FortiGates have an inspection interface in the inspection VPC and a management interface with an external IP in the management VPC. Cloud NAT provides internet egress for the inspection interface.
 
@@ -33,6 +37,8 @@ Each configured zone has one FortiGate VM in an **unmanaged instance group**. Th
 | Optional demo workload | Two peered web VPCs (`10.12.0.0/24` and `10.13.0.0/24`) with Debian web servers running Apache and iperf3. |
 
 Terraform enables the Compute Engine, Network Security, and Cloud Resource Manager APIs. After Terraform completes, `setup-nsi.sh` creates the intercept deployment group, zone deployments, endpoint group, custom intercept security profile, security profile group, and global network firewall policy. It then associates the endpoint group and policy with the demo VPCs and any VPCs named in `CONSUMER_NETWORKS`.
+
+Google Cloud supports direct internet egress through an appropriately configured inspection appliance, but this sample's Cloud NAT serves the FortiGate inspection interface for services and updates. Plan internet egress for your workload VPCs separately. Packet Intercept also adds packet processing overhead, and regional network firewall policies do not support it. See the [Google Cloud limitations](https://docs.cloud.google.com/network-security-integration/docs/in-band/in-band-integration-overview#limitations).
 
 ## Deploy the Sample
 
@@ -69,7 +75,7 @@ You can also use `CONSUMER_NETWORKS` alongside the demo VPCs. The script checks 
 
 ## Cleanup
 
-Remove the NSI associations and resources before destroying the Terraform infrastructure. Pass the same `CONSUMER_NETWORKS` list used during setup:
+Remove the NSI associations and resources before destroying the Terraform infrastructure. Run this from the Terraform directory, so that it can read the Terraform outputs.  If you ran the script "manually" by inputting existing consumer networks, Pass the same `CONSUMER_NETWORKS` list used during setup:
 
 ```sh
 CONSUMER_NETWORKS="prod-vpc,staging-vpc" PROJECT_ID=your-gcp-project-id ORGANIZATION_ID=123456789012 ./cleanup-nsi.sh
