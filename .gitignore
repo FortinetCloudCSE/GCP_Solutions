@@ -7,3 +7,12 @@ package-lock.json
 package.json
 /venv
 fortihugorunner
+*.tfvars
+*.tfplan
+*.tfstate
+*.tfstate.backup
+*.csv
+.terraform*
+*.pem
+*.lic
+tf.plan
