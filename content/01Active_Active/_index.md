@@ -1,6 +1,6 @@
 ---
-title: "Ch 1 FortiGate Active_Active High Availability"
-linkTitle: "Ch 1: FortiGate Active_Active"
+title: "Ch 1 FortiGate Active-Active High Availability"
+linkTitle: "Ch 1: FortiGate Active-Active"
 weight: 8
 #archetype: "chapter"
 ---
