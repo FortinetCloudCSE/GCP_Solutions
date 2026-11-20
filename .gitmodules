@@ -1,0 +1,9 @@
+[submodule "terraform/gcp-fgt-a-p-new"]
+	path = terraform/gcp-fgt-a-p-new
+	url = https://github.com/fortidg/gcp-fgt-a-p-new.git
+[submodule "terraform/gcp-nsi-umig"]
+	path = terraform/gcp-nsi-umig
+	url = https://github.com/fortidg/gcp-nsi-umig.git
+[submodule "terraform/gcp-fgt-a_a"]
+	path = terraform/gcp-fgt-a_a
+	url = https://github.com/fortidg/gcp-fgt-a_a.git
